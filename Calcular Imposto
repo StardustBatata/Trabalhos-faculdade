@@ -1,0 +1,82 @@
+import java.util.Scanner;
+
+public class ImpostoDeRenda {
+    
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        
+        // Entrada de dados
+        System.out.print("Informe a renda anual com salário: ");
+        double rendaAnualSalario = scanner.nextDouble();
+        
+        System.out.print("Informe a renda anual com prestação de serviços: ");
+        double rendaAnualServico = scanner.nextDouble();
+        
+        System.out.print("Informe a renda anual com ganho de capital: ");
+        double rendaAnualGanhoCapital = scanner.nextDouble();
+        
+        System.out.print("Informe os gastos médicos e educacionais no ano: ");
+        double gastosMedicosEducacionais = scanner.nextDouble();
+        
+        // Cálculo do imposto sobre o salário
+        double impostoSalario = calcularImpostoSalario(rendaAnualSalario);
+        
+        // Cálculo do imposto sobre a prestação de serviços
+        double impostoServico = calcularImpostoServico(rendaAnualServico);
+        
+        // Cálculo do imposto sobre ganho de capital
+        double impostoGanhoCapital = calcularImpostoGanhoCapital(rendaAnualGanhoCapital);
+        
+        // Cálculo do imposto bruto
+        double impostoBruto = impostoSalario + impostoServico + impostoGanhoCapital;
+        
+        // Cálculo do abatimento
+        double abatimento = calcularAbatimento(impostoBruto, gastosMedicosEducacionais);
+        
+        // Cálculo do imposto líquido
+        double impostoLiquido = impostoBruto - abatimento;
+        
+        // Exibir o relatório final
+        System.out.println("\nRelatório de Imposto de Renda:");
+        System.out.println("Imposto sobre salário: R$ " + impostoSalario);
+        System.out.println("Imposto sobre prestação de serviços: R$ " + impostoServico);
+        System.out.println("Imposto sobre ganho de capital: R$ " + impostoGanhoCapital);
+        System.out.println("Imposto bruto: R$ " + impostoBruto);
+        System.out.println("Abatimento: R$ " + abatimento);
+        System.out.println("Imposto líquido: R$ " + impostoLiquido);
+        
+        scanner.close();
+    }
+
+    // Função para calcular o imposto sobre o salário
+    public static double calcularImpostoSalario(double rendaAnualSalario) {
+        double rendaMensal = rendaAnualSalario / 12;
+        if (rendaMensal < 3000) {
+            return 0;
+        } else if (rendaMensal < 5000) {
+            return rendaAnualSalario * 0.10;
+        } else {
+            return rendaAnualSalario * 0.20;
+        }
+    }
+
+    // Função para calcular o imposto sobre a prestação de serviços
+    public static double calcularImpostoServico(double rendaAnualServico) {
+        return rendaAnualServico * 0.15;
+    }
+
+    // Função para calcular o imposto sobre o ganho de capital
+    public static double calcularImpostoGanhoCapital(double rendaAnualGanhoCapital) {
+        return rendaAnualGanhoCapital * 0.20;
+    }
+
+    // Função para calcular o valor do abatimento
+    public static double calcularAbatimento(double impostoBruto, double gastosMedicosEducacionais) {
+        double limiteAbatimento = impostoBruto * 0.30;
+        if (gastosMedicosEducacionais < limiteAbatimento) {
+            return gastosMedicosEducacionais;
+        } else {
+            return limiteAbatimento;
+        }
+    }
+}

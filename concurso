@@ -1,0 +1,64 @@
+import java.util.Scanner;
+
+public class Concurso {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        System.out.print("Digite a quantidade de pessoas: ");
+        int N = sc.nextInt();
+        sc.nextLine();
+
+        String[] nomes = new String[N];
+        double[] notaEtapa1 = new double[N];
+        double[] notaEtapa2 = new double[N];
+        double[] medias = new double[N];
+
+        for (int i = 0; i < N; i++) {
+            System.out.print("Nome: ");
+            nomes[i] = sc.nextLine();
+            System.out.print("Nota da etapa 1: ");
+            notaEtapa1[i] = sc.nextDouble();
+            System.out.print("Nota da etapa 2: ");
+            notaEtapa2[i] = sc.nextDouble();
+            sc.nextLine();
+
+            medias[i] = (notaEtapa1[i] + notaEtapa2[i]) / 2.0;
+        }
+
+        System.out.println("\nTabela de Participantes:");
+        for (int i = 0; i < N; i++) {
+            System.out.printf("Nome: %s - Média: %.2f\n", nomes[i], medias[i]);
+        }
+
+        System.out.println("\nPessoas aprovadas:");
+        int aprovados = 0;
+        double somaMediasAprovados = 0.0;
+        for (int i = 0; i < N; i++) {
+            if (medias[i] >= 70.0) {
+                System.out.println(nomes[i]);
+                aprovados++;
+                somaMediasAprovados += medias[i];
+            }
+        }
+
+        double porcentagemAprovacao = (double) aprovados / N * 100;
+        System.out.printf("\nPorcentagem de aprovação: %.2f%%\n", porcentagemAprovacao);
+
+        int indiceMaiorMedia = 0;
+        for (int i = 1; i < N; i++) {
+            if (medias[i] > medias[indiceMaiorMedia]) {
+                indiceMaiorMedia = i;
+            }
+        }
+        System.out.println("Pessoa com a maior média: " + nomes[indiceMaiorMedia]);
+
+        if (aprovados > 0) {
+            double mediaAprovados = somaMediasAprovados / aprovados;
+            System.out.printf("Média das pessoas aprovadas: %.2f\n", mediaAprovados);
+        } else {
+            System.out.println("Não há candidatos aprovados");
+        }
+
+        sc.close();
+    }
+}

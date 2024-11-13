@@ -1,0 +1,134 @@
+import java.util.Scanner;
+
+public class Aluno {
+    private String nome;
+    private String matricula;
+    private String sexo;
+    private String dataNascimento;
+    private String curso;
+    private int anoInicio;
+    private double notaProva1;
+    private double notaProva2;
+    private double mediaTrabalhos;
+
+    // Getters e Setters
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public String getMatricula() {
+        return matricula;
+    }
+
+    public void setMatricula(String matricula) {
+        this.matricula = matricula;
+    }
+
+    public String getSexo() {
+        return sexo;
+    }
+
+    public void setSexo(String sexo) {
+        this.sexo = sexo;
+    }
+
+    public String getDataNascimento() {
+        return dataNascimento;
+    }
+
+    public void setDataNascimento(String dataNascimento) {
+        this.dataNascimento = dataNascimento;
+    }
+
+    public String getCurso() {
+        return curso;
+    }
+
+    public void setCurso(String curso) {
+        this.curso = curso;
+    }
+
+    public int getAnoInicio() {
+        return anoInicio;
+    }
+
+    public void setAnoInicio(int anoInicio) {
+        this.anoInicio = anoInicio;
+    }
+
+    public double getNotaProva1() {
+        return notaProva1;
+    }
+
+    public void setNotaProva1(double notaProva1) {
+        this.notaProva1 = notaProva1;
+    }
+
+    public double getNotaProva2() {
+        return notaProva2;
+    }
+
+    public void setNotaProva2(double notaProva2) {
+        this.notaProva2 = notaProva2;
+    }
+
+    public double getMediaTrabalhos() {
+        return mediaTrabalhos;
+    }
+
+    public void setMediaTrabalhos(double mediaTrabalhos) {
+        this.mediaTrabalhos = mediaTrabalhos;
+    }
+
+    // Método para calcular média final e verificar aprovação
+    public boolean estaAprovado() {
+        double mediaFinal = (notaProva1 + notaProva2 + mediaTrabalhos) / 3;
+        return mediaFinal >= 6.0;
+    }
+
+    // Método principal para testar a classe Aluno
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        Aluno aluno = new Aluno();
+
+        System.out.print("Digite o nome do aluno: ");
+        aluno.setNome(scanner.nextLine());
+
+        System.out.print("Digite a matrícula do aluno: ");
+        aluno.setMatricula(scanner.nextLine());
+
+        System.out.print("Digite o sexo do aluno: ");
+        aluno.setSexo(scanner.nextLine());
+
+        System.out.print("Digite a data de nascimento do aluno (dd/mm/aaaa): ");
+        aluno.setDataNascimento(scanner.nextLine());
+
+        System.out.print("Digite o curso do aluno: ");
+        aluno.setCurso(scanner.nextLine());
+
+        System.out.print("Digite o ano de início do curso: ");
+        aluno.setAnoInicio(scanner.nextInt());
+
+        System.out.print("Digite a nota da Prova 1: ");
+        aluno.setNotaProva1(scanner.nextDouble());
+
+        System.out.print("Digite a nota da Prova 2: ");
+        aluno.setNotaProva2(scanner.nextDouble());
+
+        System.out.print("Digite a média das notas dos trabalhos: ");
+        aluno.setMediaTrabalhos(scanner.nextDouble());
+
+        // Verificar se o aluno está aprovado
+        if (aluno.estaAprovado()) {
+            System.out.println("O aluno " + aluno.getNome() + " está aprovado.");
+        } else {
+            System.out.println("O aluno " + aluno.getNome() + " está reprovado.");
+        }
+
+        scanner.close();
+    }
+}

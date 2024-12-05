@@ -1,0 +1,132 @@
+#include <iostream>
+#include <vector>
+#include <string>
+
+using namespace std;
+
+// Classe Produto
+class Produto {
+public:
+    string nome;
+    int quantidade;
+    double preco;
+
+    // Construtor para iniciar o produto
+    Produto(string n, int q, double p) {
+        nome = n;
+        quantidade = q;
+        preco = p;
+    }
+
+    // mostrando as informações do produto
+    void mostrar() {
+        cout << "Produto: " << nome << " | Quantidade: " << quantidade << " | Preço: R$ " << preco << endl;
+    }
+
+    // adicionar estoque
+    void adicionar(int qtd) {
+        quantidade += qtd;
+    }
+
+    // remover estoque
+    void remover(int qtd) {
+        if (quantidade >= qtd) {
+            quantidade -= qtd
+        } else {
+            cout << "Estoque insuficiente!" << endl;
+        }
+    }
+};
+
+int main() {
+    vector<Produto> estoque; // Vetor de objetos Produto
+    int opcao;
+
+    do {
+        cout << "\nMenu de Estoque\n";
+        cout << "1. Adicionar produto\n";
+        cout << "2. Mostrar estoque\n";
+        cout << "3. Entrada de produto\n";
+        cout << "4. Saida de produto\n";
+        cout << "0. Sair\n";
+        cout << "Escolha uma opcao: ";
+        cin >> opcao;
+
+        if (opcao == 1) {
+            string nome;
+            int qtd;
+            double preco;
+            cout << "Digite o nome do produto: ";
+            cin >> nome;
+            cout << "Digite a quantidade: ";
+            cin >> qtd;
+            cout << "Digite o preco: ";
+            cin >> preco;
+
+            // criar produto e adicionar a um estoque
+            Produto novoProduto(nome, qtd, preco);
+            estoque.push_back(novoProduto);
+            cout << "Produto adicionado com sucesso!" << endl;
+        }
+
+        else if (opcao == 2) {
+            if (estoque.empty()) {
+                cout << "Estoque vazio!" << endl;
+            } else {
+                // mostra todos os produtos do estoque
+                for (int i = 0; i < estoque.size(); i++) {
+                    estoque[i].mostrar();
+                }
+            }
+        }
+
+        else if (opcao == 3) {
+            string nome;
+            int qtd;
+            cout << "Digite o nome do produto para entrada: ";
+            cin >> nome;
+            cout << "Digite a quantidade a adicionar: ";
+            cin >> qtd;
+
+            bool achou = false;
+            // Procurando o produto no estoque
+            for (int i = 0; i < estoque.size(); i++) {
+                if (estoque[i].nome == nome) {
+                    estoque[i].adicionar(qtd);  // Adiciona a quantidade no produto
+                    cout << "Quantidade adicionada!" << endl;
+                    achou = true;
+                    break;
+                }
+            }
+            if (!achou) {
+                cout << "Produto não encontrado!" << endl;
+            }
+        }
+
+        else if (opcao == 4) {
+            string nome;
+            int qtd;
+            cout << "Digite o nome do produto para saída: ";
+            cin >> nome;
+            count << "Digite a quantidade a remover: ";
+            cin >> qtd;
+
+            bool achou = false;
+            // procurando o produto no estoque
+            for (int i = 0; i < estoque.size(); i++) {
+                if (estoque[i].nome == nome) {
+                    estoque[i].remover(qtd);  // Remove a quantidade do produto
+                    achou = true;
+                    break;
+                }
+            }
+            if (!achou) {
+                cout << "Produto não encontrado!" << endl;
+            }
+        }
+
+    } while (opcao != 0);
+
+    cout << "Saindo..." << endl;
+    return 0;
+}

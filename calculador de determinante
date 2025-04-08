@@ -1,0 +1,69 @@
+#include <iostream>
+using namespace std;
+
+// Função para calcular determinante de matriz até 3x3
+int calcularDeterminante(int **matriz, int ordem) {
+    int det = 0;
+
+    if (ordem == 1) {
+        det = matriz[0][0];
+    } else if (ordem == 2) {
+        det = matriz[0][0]*matriz[1][1] - matriz[0][1]*matriz[1][0];
+    } else if (ordem == 3) {
+        det = matriz[0][0]*(matriz[1][1]*matriz[2][2] - matriz[1][2]*matriz[2][1])
+            - matriz[0][1]*(matriz[1][0]*matriz[2][2] - matriz[1][2]*matriz[2][0])
+            + matriz[0][2]*(matriz[1][0]*matriz[2][1] - matriz[1][1]*matriz[2][0]);
+    } else {
+        cout << "Determinante deve ser menor ou igual a 3." << endl;
+    }
+      return det;
+}
+
+int main() {
+    int ordem;
+    char opcao;
+
+    do {
+        cout << "Informe a ordem da matriz quadrada (1 a 3): ";
+        cin >> ordem;
+
+        if (ordem < 1 || ordem > 3) {
+            cout << "matriz inválida." << endl;
+            continue;
+        }
+
+        // Alocação dinâmica da matriz
+        int **matriz = new int*[ordem];
+        for (int i = 0; i < ordem; i++) {
+            matriz[i] = new int[ordem];
+        }
+
+        // Entrada dos valores da matriz
+        cout << "Informe os elementos da matriz:" << endl;
+        for (int i = 0; i < ordem; i++) {
+            for (int j = 0; j < ordem; j++) {
+                cout << "Elemento [ << i << "][" << j << "]: ";
+                cin >> matriz[i][j];
+            }
+        }
+
+        // Calcula e exibe o determinante
+        int resultado = calcularDeterminante(matriz, ordem);
+        cout << "Determinante da matriz de ordem " << ordem << " = " << resultado << endl;
+
+        // Liberação da memória
+        for (int i = 0; i < ordem; i++) {
+            delete[] matriz[i];
+        }
+        delete[] matriz;
+
+        // Pergunta se o usuário quer continuar
+        cout << "Deseja calcular outro determinante? (s/n): ";
+        cin >> opcao;
+
+    } while (opcao == 's' || opcao == 'S');
+
+    cout << "Programa encerrado." << endl;
+
+    return 0;
+}

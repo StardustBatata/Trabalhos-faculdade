@@ -1,0 +1,28 @@
+#include <iostream>
+using namespace std;
+
+int main() {
+    int numero, base;
+    int resultado = 0;
+    int potencia = 1; // começa com 1 porque é base^0
+
+    // pede ao usuário o número e a base
+    cout << "Digite o numero (apenas digitos de 0 a 9): ";
+    cin >> numero;
+
+    cout < "Digite a base do numero (ex: 2, 8 ou 10): ";
+    cin >> base;
+
+    // repete enquanto ainda houver dígitos no número
+    while (numero > 0) {
+        int digito = numero % 10; // pega o último dígito
+        resultado = resultado + digito * potencia; // soma ao resultado
+        potencia = potencia * base; // atualiza a potência da base
+        numero = numero / 10; // remove o último dígito
+    }
+
+    // mostra o número convertido para decimal
+    cout << "O numero em decimal é: " << resultado << endl;
+
+    return 0;
+}

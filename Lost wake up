@@ -1,0 +1,68 @@
+#include <iostream>
+#include <pthread.h>
+#include <semaphore.h>
+#include <unistd.h>
+
+using namespace std;
+
+#define TAMANHO_BUFFER 7
+
+int buffer[TAMANHO_BUFFER];
+int posicao = 0;
+
+sem_t vazio;
+sem_t cheio;
+
+pthread_mutex_t mutex;
+
+void* produtor(void* arg) {
+    int item = 1;
+    while (true) {
+        sem_wait(&vazio);
+        pthread_mutex_lock(&mutex);
+
+        buffer[posicao] = item;
+        cout << "Produtor produziu: " << item << endl;
+        posicao = (posicao + 1) % TAMANHO_BUFFER;
+        item++;
+
+        pthread_mutex_unlock(&mutex);
+        sem_post(&cheio);
+
+        sleep(1);
+    }
+    return NULL;
+}
+
+void* consumidor(void* arg) {
+    while (true) {
+        sem_wait(&cheio);
+        pthread_mutex_lock(&mutex);
+
+        posicao = (posicao - 1 + TAMANHO_BUFFER) % TAMANHO_BUFFER;
+        int item = buffer[posicao];
+        cout << "Consumidor consumiu: " << item << endl;
+
+        pthread_mutex_unlock(&mutex);
+        sem_post(&vazio);
+
+        sleep(2);
+    }
+    return NULL;
+}
+
+int main() {
+    pthread_t t1, t2;
+
+    sem_init(&vazio, 0, TAMANHO_BUFFER);
+    sem_init(&cheio, 0, 0);
+    pthread_mutex_init(&mutex, NULL);
+
+    pthread_create(&t1, NULL, produtor, NULL);
+    pthread_create(&t2, NULL, consumidor, NULL);
+
+    pthread_join(t1, NULL);
+    pthread_join(t2, NULL);
+
+    return 0;
+}
